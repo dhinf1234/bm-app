@@ -1,0 +1,10 @@
+.choice-group{border:0;padding:0;margin:4px 0 0}
+.choice-group legend{font-size:14px;font-weight:600;margin-bottom:9px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{display:inline-flex!important;cursor:pointer}
+.chip input{position:absolute;opacity:0;pointer-events:none}
+.chip span{border:1px solid var(--line);border-radius:999px;padding:9px 13px;background:var(--bg);font-size:14px;font-weight:600;transition:.18s ease}
+.chip.selected span{background:var(--primary);border-color:var(--primary);color:#fff;box-shadow:0 4px 12px #7c3aed38}
+.chip input:focus-visible + span{outline:3px solid #7c3aed40;outline-offset:2px}
+.chip input:disabled + span{opacity:.62}
+.optional{color:var(--muted);font-weight:400}

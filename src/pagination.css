@@ -1,0 +1,4 @@
+.activity-heading{margin:0 0 14px}
+.pagination{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:20px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:13px;font-weight:600}
+.page-button{height:36px;padding:0 13px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);font-weight:700}
+.page-button:not(:disabled):hover{border-color:var(--primary);color:var(--primary)}
