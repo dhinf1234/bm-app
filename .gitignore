@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.env
+.firebase/
+functions/lib/
+functions/node_modules/
+worker/node_modules/
+worker/.dev.vars

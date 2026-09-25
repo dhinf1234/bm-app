@@ -1,0 +1,7 @@
+# Never commit a real .dev.vars file.
+ALLOWED_ORIGIN=https://YOUR_GITHUB_USERNAME.github.io
+ALLOWED_UIDS=uid-one,uid-two
+FIREBASE_PROJECT_ID=your-project-id
+SERVICE_ACCOUNT_EMAIL=firebase-adminsdk-xxxxx@your-project-id.iam.gserviceaccount.com
+# Paste the private_key field from the downloaded service-account JSON, retaining \n characters.
+SERVICE_ACCOUNT_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n"
