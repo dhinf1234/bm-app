@@ -4,12 +4,12 @@ service cloud.firestore {
     function signedIn() { return request.auth != null; }
     // Replace these two values before deploying. UID—not email—is the authority.
     function approved() {
-      return signedIn() && request.auth.uid in ['ty2E8bD4ALVEwmpHNp4fIyOVQ7m2', '5lOhcWjXGdZUKJ1kdhxgqKtX3HQ2'];
+      return signedIn() && request.auth.uid in ['ty2E8bD4ALVEwmpHNp4fIyOVQ7m2', '5lOhcWjXGdZUKJ1kdhxgqKtX3HQ2', 'uwt7mhHGgqeaIxVcLXAv57gXULH2'];
     }
     function allowedValue(value) { return value in ['none', 'bookmark_now', 'bookmark_later']; }
 
     match /users/{uid} {
-      allow get: if approved() && (uid == request.auth.uid || uid in ['ty2E8bD4ALVEwmpHNp4fIyOVQ7m2', '5lOhcWjXGdZUKJ1kdhxgqKtX3HQ2']);
+      allow get: if approved() && (uid == request.auth.uid || uid in ['ty2E8bD4ALVEwmpHNp4fIyOVQ7m2', '5lOhcWjXGdZUKJ1kdhxgqKtX3HQ2', 'uwt7mhHGgqeaIxVcLXAv57gXULH2']);
       allow list: if false;
       allow create: if approved() && uid == request.auth.uid
         && request.resource.data.keys().hasOnly(['name', 'email', 'fcmTokens', 'approved'])
