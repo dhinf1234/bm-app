@@ -1,4 +1,4 @@
-import { addDoc, arrayUnion, collection, doc, limit, onSnapshot, orderBy, query, serverTimestamp, setDoc, startAfter, updateDoc } from 'firebase/firestore'
+import { addDoc, arrayRemove, arrayUnion, collection, doc, limit, onSnapshot, orderBy, query, serverTimestamp, setDoc, startAfter, updateDoc } from 'firebase/firestore'
 import { db } from '../firebase/client'
 
 export function ensureUser(user) {
@@ -16,6 +16,7 @@ export function watchSubmissions(callback, fail, cursor = null) {
   return onSnapshot(query(collection(db, 'submissions'), ...constraints), snapshot => callback({ items: snapshot.docs.map(d => ({ id: d.id, ...d.data() })), lastDoc: snapshot.docs.at(-1) || null }), fail)
 }
 export function saveToken(uid, token) { return setDoc(doc(db, 'users', uid), { fcmTokens: arrayUnion(token) }, { merge: true }) }
+export function removeToken(uid, token) { return setDoc(doc(db, 'users', uid), { fcmTokens: arrayRemove(token) }, { merge: true }) }
 export function markLinkViewed(submissionId, user) {
   const name = user.displayName || user.email?.split('@')[0] || 'User'
   return updateDoc(doc(db, 'submissions', submissionId), { [`viewedBy.${user.uid}`]: name })
