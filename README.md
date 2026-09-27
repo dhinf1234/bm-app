@@ -94,7 +94,7 @@ Push this repository to GitHub. In **Settings → Pages**, choose **GitHub Actio
 
 `VITE_FIREBASE_API_KEY`, `VITE_FIREBASE_AUTH_DOMAIN`, `VITE_FIREBASE_PROJECT_ID`, `VITE_FIREBASE_STORAGE_BUCKET`, `VITE_FIREBASE_MESSAGING_SENDER_ID`, `VITE_FIREBASE_APP_ID`, `VITE_FIREBASE_VAPID_KEY`, `VITE_APPROVED_UIDS`, and `VITE_NOTIFICATION_WORKER_URL`.
 
-The provided workflow sets Vite's Pages base path to `/<repository-name>/`. For an alternative manual deploy, set that same `VITE_BASE_PATH` in `.env` and run `npm run deploy` after configuring GitHub Pages to use the `gh-pages` branch.
+The provided workflow sets Vite's Pages base path to `/<repository-name>/` and deploys the production files from `docs/`. In **Settings → Pages**, choose **GitHub Actions** as the source. For an alternative manual deploy, set that same `VITE_BASE_PATH` in `.env` and run `npm run deploy` after configuring GitHub Pages to use the `gh-pages` branch.
 
 ## Security checklist
 
