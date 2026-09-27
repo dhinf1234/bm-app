@@ -1,0 +1,1 @@
+.notification-copy{display:flex;align-items:center;gap:10px}.notification-icon{display:grid;place-items:center}.notification-status.enabled .notification-icon{color:#098344}.notification-status.disabled .notification-icon{color:#d52b50}.text-button{display:inline-flex;align-items:center;gap:6px}.form-locked{opacity:.78}.form-lock-message{color:#d52b50!important;font-weight:600}
