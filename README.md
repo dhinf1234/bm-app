@@ -70,6 +70,7 @@ npm run deploy
 
 ```bash
 npx wrangler secret put ALLOWED_ORIGIN
+npx wrangler secret put APP_URL
 npx wrangler secret put ALLOWED_UIDS
 npx wrangler secret put FIREBASE_PROJECT_ID
 npx wrangler secret put SERVICE_ACCOUNT_EMAIL

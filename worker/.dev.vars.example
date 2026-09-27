@@ -1,5 +1,6 @@
 # Never commit a real .dev.vars file.
 ALLOWED_ORIGIN=https://YOUR_GITHUB_USERNAME.github.io
+APP_URL=https://YOUR_GITHUB_USERNAME.github.io/YOUR_REPOSITORY_NAME/
 ALLOWED_UIDS=uid-one,uid-two
 FIREBASE_PROJECT_ID=your-project-id
 SERVICE_ACCOUNT_EMAIL=firebase-adminsdk-xxxxx@your-project-id.iam.gserviceaccount.com

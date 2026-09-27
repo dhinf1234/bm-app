@@ -79,7 +79,8 @@ export default {
       const tokens = recipientDoc.fields?.fcmTokens?.arrayValue?.values?.map(string).filter(Boolean) || []
       const title = `${string(fields.userName)} submitted a bookmark`
       const selection = string(fields.value) === 'bookmark_now' ? 'Bookmark now' : string(fields.value) === 'bookmark_later' ? 'Bookmark later' : 'None'
-      const results = await Promise.all(tokens.map(deviceToken => fetch(`https://fcm.googleapis.com/v1/projects/${env.FIREBASE_PROJECT_ID}/messages:send`, { method: 'POST', headers: { Authorization: `Bearer ${token}`, 'content-type': 'application/json' }, body: JSON.stringify({ message: { token: deviceToken, notification: { title, body: `Selected: ${selection}` }, webpush: { fcm_options: { link: env.ALLOWED_ORIGIN } } } }) })))
+      const appUrl = env.APP_URL || env.ALLOWED_ORIGIN
+      const results = await Promise.all(tokens.map(deviceToken => fetch(`https://fcm.googleapis.com/v1/projects/${env.FIREBASE_PROJECT_ID}/messages:send`, { method: 'POST', headers: { Authorization: `Bearer ${token}`, 'content-type': 'application/json' }, body: JSON.stringify({ message: { token: deviceToken, notification: { title, body: `Selected: ${selection}` }, webpush: { fcm_options: { link: appUrl } } } }) })))
       return json({ ok: true, sent: results.filter(result => result.ok).length }, 200, origin)
     } catch (error) { console.error(error); return json({ error: 'Notification failed' }, 500, origin) }
   },
