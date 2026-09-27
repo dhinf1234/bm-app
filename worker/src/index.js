@@ -19,11 +19,35 @@ async function accessToken(env) {
   return (await response.json()).access_token
 }
 
+function base64urlBytes(value) {
+  const padded = value.replace(/-/g, '+').replace(/_/g, '/') + '='.repeat((4 - value.length % 4) % 4)
+  return Uint8Array.from(atob(padded), char => char.charCodeAt(0))
+}
+
+function jwtPart(value) {
+  return JSON.parse(new TextDecoder().decode(base64urlBytes(value)))
+}
+
 async function verifiedUid(idToken, env) {
-  const response = await fetch(`https://oauth2.googleapis.com/tokeninfo?id_token=${encodeURIComponent(idToken)}`)
-  if (!response.ok) return null
-  const token = await response.json()
-  return token.aud === env.FIREBASE_PROJECT_ID && token.iss === `https://securetoken.google.com/${env.FIREBASE_PROJECT_ID}` ? token.sub : null
+  try {
+    const [encodedHeader, encodedClaims, encodedSignature, ...extra] = idToken.split('.')
+    if (!encodedHeader || !encodedClaims || !encodedSignature || extra.length) return null
+    const header = jwtPart(encodedHeader)
+    const claims = jwtPart(encodedClaims)
+    const now = Math.floor(Date.now() / 1000)
+    const expectedIssuer = `https://securetoken.google.com/${env.FIREBASE_PROJECT_ID}`
+    if (header.alg !== 'RS256' || !header.kid || claims.aud !== env.FIREBASE_PROJECT_ID || claims.iss !== expectedIssuer || !claims.sub || claims.exp <= now || claims.iat > now) return null
+
+    const response = await fetch('https://www.googleapis.com/service_accounts/v1/jwk/securetoken@system.gserviceaccount.com')
+    if (!response.ok) return null
+    const jwk = (await response.json()).keys?.find(key => key.kid === header.kid)
+    if (!jwk) return null
+    const key = await crypto.subtle.importKey('jwk', jwk, { name: 'RSASSA-PKCS1-v1_5', hash: 'SHA-256' }, false, ['verify'])
+    const verified = await crypto.subtle.verify('RSASSA-PKCS1-v1_5', key, base64urlBytes(encodedSignature), new TextEncoder().encode(`${encodedHeader}.${encodedClaims}`))
+    return verified ? claims.sub : null
+  } catch {
+    return null
+  }
 }
 
 async function firestore(path, token, env) {
